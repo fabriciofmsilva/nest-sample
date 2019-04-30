@@ -7,6 +7,10 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   // Global middleware
   // app.use(logger);
+  // Global filter
+  // app.useGlobalFilters(new HttpExceptionFilter());
+  // const { httpAdapter } = app.get(HttpAdapterHost);
+  // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   await app.listen(4000);
 }
 bootstrap();

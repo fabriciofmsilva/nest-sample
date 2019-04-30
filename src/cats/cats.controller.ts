@@ -1,8 +1,10 @@
 import {
-  Controller, Get, Req, Post, Delete, HttpCode, Header, Param, Body, Query, Put,
+  Controller, Get, Req, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, HttpException,
 } from '@nestjs/common';
 
 import { of, Observable } from 'rxjs';
+
+import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -11,10 +13,12 @@ import { Cat } from './interfaces/cat.interface';
 import { CatsService } from './cats.service';
 
 @Controller('cats')
+@UseFilters(HttpExceptionFilter)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
 
   @Post()
+  @UseFilters(HttpExceptionFilter)
   @Header('Cache-Control', 'none')
   @HttpCode(201)
   create(
@@ -22,12 +26,15 @@ export class CatsController {
   ): Observable<Cat> {
     console.log('This action adds a new cat:', createCatDto);
     return of(this.catsService.create(createCatDto));
+    // throw new ForbiddenException();
   }
 
   @Get()
   findAll(@Query() query: ListAllEntities): Observable<Cat[]> {
     console.log(`This action returns all cats (limit: ${query.limit} items)`);
     return of(this.catsService.findAll());
+    // Exception
+    // throw new HttpException('Forbidden', HttpStatus.FORBIDDEN);
   }
 
   @Get(':id')

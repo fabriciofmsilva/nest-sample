@@ -12,7 +12,14 @@ import { Cat } from './cats/entities/cat.entity';
 @Module({
   imports: [CatsModule, DatabaseModule.forRoot([Cat])],
   controllers: [AppController, CatsController],
-  providers: [AppService, CatsService],
+  providers: [
+    AppService,
+    CatsService,
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: HttpExceptionFilter,
+    // },
+  ],
 })
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
