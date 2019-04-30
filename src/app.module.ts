@@ -27,6 +27,10 @@ import { Cat } from './cats/entities/cat.entity';
     //   provide: APP_GUARD,
     //   useClass: RolesGuard,
     // },
+    // {
+    //   provide: APP_INTERCEPTOR,
+    //   useClass: LoggingInterceptor,
+    // },
   ],
 })
 export class AppModule implements NestModule {

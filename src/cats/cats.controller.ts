@@ -1,5 +1,5 @@
 import {
-  Controller, Get, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, UsePipes, ParseIntPipe, UseGuards, SetMetadata,
+  Controller, Get, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, UsePipes, ParseIntPipe, UseGuards, SetMetadata, UseInterceptors,
 } from '@nestjs/common';
 
 import { of, Observable } from 'rxjs';
@@ -26,6 +26,7 @@ export class CatsController {
   @Header('Cache-Control', 'none')
   @SetMetadata('roles', ['admin'])
   @Roles('admin')
+  @UseInterceptors(LoggingInterceptor)
   @HttpCode(201)
   create(
     @Body() createCatDto: CreateCatDto,
