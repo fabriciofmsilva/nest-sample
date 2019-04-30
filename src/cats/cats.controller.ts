@@ -4,31 +4,36 @@ import {
 
 import { of, Observable } from 'rxjs';
 
-import { CreateCatDto } from './create-cat.dto';
-import { UpdateCatDto } from './update-cat.dto';
+import { CreateCatDto } from './dto/create-cat.dto';
+import { UpdateCatDto } from './dto/update-cat.dto';
 import { ListAllEntities } from './list-all-entities';
+import { Cat } from './interfaces/cat.interface';
+import { CatsService } from './cats.service';
 
 @Controller('cats')
 export class CatsController {
+  constructor(private readonly catsService: CatsService) {}
+
   @Post()
   @Header('Cache-Control', 'none')
   @HttpCode(201)
   create(
     @Body() createCatDto: CreateCatDto,
-  ): Observable<string> {
-    console.log(createCatDto);
-    return of('This action adds a new cat');
+  ): Observable<Cat> {
+    console.log('This action adds a new cat:', createCatDto);
+    return of(this.catsService.create(createCatDto));
   }
 
   @Get()
-  findAll(@Query() query: ListAllEntities): Observable<string>  {
-    return of(`This action returns all cats (limit: ${query.limit} items)`);
+  findAll(@Query() query: ListAllEntities): Observable<Cat[]> {
+    console.log(`This action returns all cats (limit: ${query.limit} items)`);
+    return of(this.catsService.findAll());
   }
 
   @Get(':id')
-  findOne(@Param('id') id): Observable<string>  {
-    console.log(id);
-    return of(`This actions returns a #${id} cat`);
+  findOne(@Param('id') id): Observable<Cat[]>  {
+    console.log(`This actions returns a #${id} cat`);
+    return of(this.catsService.findOne(id));
   }
 
   @Put(':id')
