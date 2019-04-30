@@ -13,6 +13,8 @@ async function bootstrap() {
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
   // Global pipe
   // app.useGlobalPipes(new ValidationPipe());
+  // Global guards
+  // app.useGlobalGuards(new RolesGuard());
   await app.listen(4000);
 }
 bootstrap();

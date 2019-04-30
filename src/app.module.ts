@@ -23,6 +23,10 @@ import { Cat } from './cats/entities/cat.entity';
     //   provide: APP_PIPE,
     //   useClass: ValidationPipe,
     // },
+    // {
+    //   provide: APP_GUARD,
+    //   useClass: RolesGuard,
+    // },
   ],
 })
 export class AppModule implements NestModule {

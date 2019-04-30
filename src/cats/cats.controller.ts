@@ -1,11 +1,12 @@
 import {
-  Controller, Get, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, UsePipes, ParseIntPipe,
+  Controller, Get, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, UsePipes, ParseIntPipe, UseGuards, SetMetadata,
 } from '@nestjs/common';
 
 import { of, Observable } from 'rxjs';
 
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
 import { ValidationPipe } from '../common/pipes/validation.pipe';
+import { RolesGuard } from '../common/guards/roles.guard';
 
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -14,6 +15,7 @@ import { Cat } from './interfaces/cat.interface';
 import { CatsService } from './cats.service';
 
 @Controller('cats')
+@UseGuards(RolesGuard)
 @UseFilters(HttpExceptionFilter)
 export class CatsController {
   constructor(private readonly catsService: CatsService) {}
@@ -22,6 +24,8 @@ export class CatsController {
   @UseFilters(HttpExceptionFilter)
   @UsePipes(ValidationPipe)
   @Header('Cache-Control', 'none')
+  @SetMetadata('roles', ['admin'])
+  @Roles('admin')
   @HttpCode(201)
   create(
     @Body() createCatDto: CreateCatDto,
