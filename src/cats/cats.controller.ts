@@ -1,10 +1,11 @@
 import {
-  Controller, Get, Req, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, HttpException,
+  Controller, Get, Post, Delete, HttpCode, Header, Param, Body, Query, Put, UseFilters, UsePipes, ParseIntPipe,
 } from '@nestjs/common';
 
 import { of, Observable } from 'rxjs';
 
 import { HttpExceptionFilter } from '../common/filters/http-exception.filter';
+import { ValidationPipe } from '../common/pipes/validation.pipe';
 
 import { CreateCatDto } from './dto/create-cat.dto';
 import { UpdateCatDto } from './dto/update-cat.dto';
@@ -19,6 +20,7 @@ export class CatsController {
 
   @Post()
   @UseFilters(HttpExceptionFilter)
+  @UsePipes(ValidationPipe)
   @Header('Cache-Control', 'none')
   @HttpCode(201)
   create(
@@ -38,7 +40,7 @@ export class CatsController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id): Observable<Cat[]>  {
+  findOne(@Param('id', new ParseIntPipe()) id): Observable<Cat[]>  {
     console.log(`This actions returns a #${id} cat`);
     return of(this.catsService.findOne(id));
   }

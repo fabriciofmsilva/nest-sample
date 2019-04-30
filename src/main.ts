@@ -11,6 +11,8 @@ async function bootstrap() {
   // app.useGlobalFilters(new HttpExceptionFilter());
   // const { httpAdapter } = app.get(HttpAdapterHost);
   // app.useGlobalFilters(new AllExceptionsFilter(httpAdapter));
+  // Global pipe
+  // app.useGlobalPipes(new ValidationPipe());
   await app.listen(4000);
 }
 bootstrap();

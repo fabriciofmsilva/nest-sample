@@ -19,6 +19,10 @@ import { Cat } from './cats/entities/cat.entity';
     //   provide: APP_FILTER,
     //   useClass: HttpExceptionFilter,
     // },
+    // {
+    //   provide: APP_PIPE,
+    //   useClass: ValidationPipe,
+    // },
   ],
 })
 export class AppModule implements NestModule {
