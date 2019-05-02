@@ -37,7 +37,7 @@ export class CatsController {
   }
 
   @Get()
-  findAll(@Query() query: ListAllEntities): Observable<Cat[]> {
+  findAll(@Query() query?: ListAllEntities): Observable<Cat[]> {
     console.log(`This action returns all cats (limit: ${query.limit} items)`);
     return of(this.catsService.findAll());
     // Exception
