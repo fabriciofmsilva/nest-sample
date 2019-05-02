@@ -9,6 +9,31 @@ import { CatsService } from './cats/cats.service';
 import { CatsModule } from './cats/cats.module';
 import { DatabaseModule } from './database/database.module';
 import { Cat } from './cats/entities/cat.entity';
+
+// import { connection } from './connection';
+
+// const connectionProvider = {
+//   provider: 'CONNECTION',
+//   useValue: connection,
+// };
+
+// const configServiceProvider = {
+//   provide: ConfigService,
+//   useClass:
+//     process.env.NODE_ENV === 'development'
+//       ? DevelopmentConfigService
+//       : ProductionConfigService,
+// };
+
+// const connectionFactory = {
+//   provide: 'CONNECTION',
+//   useFactory: (optionsProvider: OptionsProvider) => {
+//     const options = optionsProvider.get();
+//     return new DatabaseConnection(options);
+//   },
+//   inject: [OptionsProvider],
+// };
+
 @Module({
   imports: [CatsModule, DatabaseModule.forRoot([Cat])],
   controllers: [AppController, CatsController],
